@@ -1,6 +1,0 @@
-[submodule "chessboard-detector"]
-	path = chessboard-detector
-	url = https://github.com/tbtiberiu/chessboard-detector.git
-[submodule "chess-pieces-detector"]
-	path = chess-pieces-detector
-	url = https://github.com/tbtiberiu/chess-pieces-detector.git
