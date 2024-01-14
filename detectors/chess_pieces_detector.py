@@ -5,5 +5,5 @@ class ChessPiecesDetector:
         self.model = YOLO(model_path)
 
     def detect(self, image):
-        results = self.model(image, save=True, imgsz=416, conf=0.5)
+        results = self.model(image, save=True)
         return results
