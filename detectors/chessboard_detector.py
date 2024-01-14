@@ -8,13 +8,22 @@ from utils.other import resize_image, order_corners, bound_corners, perspective_
 
 
 class ChessboardDetector:
-    def __init__(self, image):
-        self.original_image = image.copy()
-        self.image = resize_image(image)
-        self.gray_image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    LAYER_COUNT = 3
+
+    def __init__(self):
+        self.original_image = None
+        self.image = None
         self.intersections = []
         self.lines = []
         self.corners = []
+
+    def set_image(self, image):
+        self.original_image = image.copy()
+        self.image = resize_image(image)
+        self.intersections = []
+        self.lines = []
+        self.corners = []
+        return self.image
 
     def detect_lines(self):
         self.lines = LinesDetector.detect(self.image)
@@ -27,27 +36,30 @@ class ChessboardDetector:
     def detect_corners(self):
         self.corners = LLR(self.image, self.intersections, self.lines)
         self.corners = llr_pad(self.corners)
-        self.corners = order_corners(self.corners)
         self.corners = bound_corners(self.corners, self.image.shape[1], self.image.shape[0])
+        self.corners = order_corners(self.corners)
         return self.corners
 
     def transform(self):
-        self.corners = order_corners(self.corners)
         self.image = perspective_transform(self.image, self.corners)
-        self.gray_image = cv.cvtColor(self.image, cv.COLOR_BGR2GRAY)
         return self.image
 
-    def detect(self):
+    def detect_components(self):
         self.detect_lines()
         self.detect_intersections()
         self.detect_corners()
-        return self.image
+        return self.lines, self.intersections, self.corners
 
-    def transform_and_detect(self):
+    def layer(self):
+        self.detect_lines()
+        self.detect_intersections()
+        self.detect_corners()
         self.transform()
-        self.detect_lines()
-        self.detect_intersections()
-        self.detect_corners()
+
+    def detect(self, image, layer_count=LAYER_COUNT):
+        self.set_image(image)
+        for _ in range(layer_count):
+            self.layer()
         return self.image
 
     def draw(self):
