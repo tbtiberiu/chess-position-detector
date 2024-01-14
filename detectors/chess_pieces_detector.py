@@ -6,5 +6,4 @@ class ChessPiecesDetector:
 
     def detect(self, image):
         results = self.model(image, save=True, imgsz=416, conf=0.5)
-        for result in results:
-            print(result.boxes)
+        return results

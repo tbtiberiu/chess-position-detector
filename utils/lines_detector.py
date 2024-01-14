@@ -13,7 +13,7 @@ CLAHE_PARAMS = [
 
 class LinesDetector:
     @staticmethod
-    def canny(img, alpha=0.25):
+    def canny(img, alpha=0.3):
         """Canny Edge Detector"""
         median = np.median(img)
         img = cv.bilateralFilter(img, 7, 75, 75)
