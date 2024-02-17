@@ -1,0 +1,25 @@
+description: Ultralytics best model trained on data/chess_pieces/data.yaml
+author: Ultralytics
+license: AGPL-3.0 https://ultralytics.com/license
+date: '2024-02-16T16:40:11.550666'
+version: 8.1.1
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 416
+- 416
+names:
+  0: bishop
+  1: black-bishop
+  2: black-king
+  3: black-knight
+  4: black-pawn
+  5: black-queen
+  6: black-rook
+  7: white-bishop
+  8: white-king
+  9: white-knight
+  10: white-pawn
+  11: white-queen
+  12: white-rook
