@@ -47,12 +47,16 @@ class ChessboardDetector:
     def detect_components(self):
         self.detect_lines()
         self.detect_intersections()
+        if len(self.intersections) < 4:
+            return self.lines, self.intersections, self.corners
         self.detect_corners()
         return self.lines, self.intersections, self.corners
 
     def layer(self):
         self.detect_lines()
         self.detect_intersections()
+        if len(self.intersections) < 4:
+            return
         self.detect_corners()
         self.transform()
 

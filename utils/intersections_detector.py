@@ -123,8 +123,14 @@ class IntersectionsDetector:
     def detect(image, lines):
         """Detect intersections between lines"""
         intersections = IntersectionsDetector.get_intersections(lines)
+        if len(intersections) < 4:
+            return []
         intersections = IntersectionsDetector.cluster_points(intersections)
         intersections = IntersectionsDetector.filter_intersections(image, intersections)
+        if len(intersections) < 4:
+            return []
         intersections = IntersectionsDetector.cluster_points(intersections, 15)
+        if len(intersections) < 4:
+            return []
         intersections = IntersectionsDetector.remove_outliers(intersections, median_distance(intersections))
         return intersections
