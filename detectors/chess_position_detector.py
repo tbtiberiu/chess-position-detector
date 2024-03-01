@@ -1,5 +1,6 @@
 from detectors.chess_pieces_detector import ChessPiecesDetector
 from detectors.chessboard_detector import ChessboardDetector
+from utils.other import resize_image
 
 class ChessPositionDetector:
     def __init__(self):
@@ -7,11 +8,12 @@ class ChessPositionDetector:
         self.chess_pieces_detector = ChessPiecesDetector()
 
     def detect(self, image):
+        image = resize_image(image)
         chessboard_image = self.chessboard_detector.detect(image)
-        chess_pieces_result = self.chess_pieces_detector.detect(chessboard_image)[0]
+        chess_pieces_result = self.chess_pieces_detector.detect(image)[0]
 
-        image_width = chess_pieces_result.orig_shape[1]
-        image_height = chess_pieces_result.orig_shape[0]
+        image_width = chessboard_image.shape[1]
+        image_height = chessboard_image.shape[0]
 
         box_width = image_width / 8
         box_height = image_height / 8
@@ -24,8 +26,10 @@ class ChessPositionDetector:
             x_middle = (xmin + xmax) / 2
             y_middle = ymax - (box_height / 2)
 
-            col = int(x_middle / box_width)
-            row = int(y_middle / box_height)
+            transformed_point = self.chessboard_detector.transform_point([[x_middle, y_middle]])
+
+            col = int(transformed_point[0] / box_width)
+            row = int(transformed_point[1] / box_height)
             piece_positions.append((piece_type, (row, col)))
 
         piece_positions.sort(key=lambda x: (x[1][0], x[1][1]))

@@ -102,4 +102,4 @@ def perspective_transform(image, corner_points):
     matrix = cv.getPerspectiveTransform(corner_points, output_points)
     transformed_image = cv.warpPerspective(image, matrix, output_size)
 
-    return transformed_image
+    return transformed_image, matrix
