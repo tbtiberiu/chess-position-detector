@@ -1,5 +1,6 @@
 import cv2 as cv
 
+
 def draw_lines(img, lines, color=(0, 0, 255), thickness=1):
     """Draw lines on an image"""
     for line in lines:

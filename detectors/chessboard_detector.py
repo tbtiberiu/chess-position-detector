@@ -1,11 +1,8 @@
-import cv2 as cv
-import numpy as np
-
 from utils.drawing import draw_lines, draw_points
 from utils.intersections_detector import IntersectionsDetector
 from utils.lines_detector import LinesDetector
 from utils.llr import LLR, llr_pad
-from utils.other import resize_image, order_corners, bound_corners, perspective_transform
+from utils.other import resize_image, order_corners, bound_corners, perspective_transform, point_transform
 
 
 class ChessboardDetector:
@@ -17,7 +14,7 @@ class ChessboardDetector:
         self.intersections = []
         self.lines = []
         self.corners = []
-        self.transform_matrixes = []
+        self.transform_matrices = []
 
     def set_image(self, image):
         self.original_image = image.copy()
@@ -25,7 +22,7 @@ class ChessboardDetector:
         self.intersections = []
         self.lines = []
         self.corners = []
-        self.transform_matrixes = []
+        self.transform_matrices = []
         return self.image
 
     def detect_lines(self):
@@ -45,14 +42,11 @@ class ChessboardDetector:
 
     def transform(self):
         self.image, transform_matrix = perspective_transform(self.image, self.corners)
-        self.transform_matrixes.append(transform_matrix)
+        self.transform_matrices.append(transform_matrix)
         return self.image
 
     def transform_point(self, point):
-        transformed_point = np.array([point], dtype=np.float32)
-        for transform_matrix in self.transform_matrixes:
-            transformed_point = cv.perspectiveTransform(transformed_point, transform_matrix)
-        return transformed_point[0][0]
+        return point_transform(point, self.transform_matrices)
 
     def detect_components(self):
         self.detect_lines()

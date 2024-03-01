@@ -1,5 +1,6 @@
 from ultralytics import YOLO
 
+
 class ChessPiecesDetector:
     MODEL_PATH = 'models/chess_pieces.model.pt'
 

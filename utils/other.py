@@ -1,8 +1,9 @@
 import math
 import cv2 as cv
+import numpy as np
+
 from statistics import median
 
-import numpy as np
 
 def distance(point1, point2):
     """Calculate distance between two points"""
@@ -103,3 +104,12 @@ def perspective_transform(image, corner_points):
     transformed_image = cv.warpPerspective(image, matrix, output_size)
 
     return transformed_image, matrix
+
+def point_transform(point, transform_matrices):
+    """Transform point using matrices"""
+    transformed_point = np.array([point], dtype=np.float32)
+
+    for transform_matrix in transform_matrices:
+        transformed_point = cv.perspectiveTransform(transformed_point, transform_matrix)
+
+    return transformed_point[0][0]

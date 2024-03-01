@@ -2,6 +2,7 @@ from detectors.chess_pieces_detector import ChessPiecesDetector
 from detectors.chessboard_detector import ChessboardDetector
 from utils.other import resize_image
 
+
 class ChessPositionDetector:
     def __init__(self):
         self.chessboard_detector = ChessboardDetector()
@@ -27,6 +28,11 @@ class ChessPositionDetector:
             y_middle = ymax - (box_height / 2)
 
             transformed_point = self.chessboard_detector.transform_point([[x_middle, y_middle]])
+
+            if transformed_point[0] < 0 or transformed_point[1] < 0:
+                continue
+            if transformed_point[0] > image_width or transformed_point[1] > image_height:
+                continue
 
             col = int(transformed_point[0] / box_width)
             row = int(transformed_point[1] / box_height)
