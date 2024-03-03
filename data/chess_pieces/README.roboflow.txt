@@ -1,8 +1,8 @@
 
-Chess Pieces - v24 416x416_aug
+chess-snapshot - v2 2024-03-03 1:12pm
 ==============================
 
-This dataset was exported via roboflow.com on January 19, 2023 at 6:47 AM GMT
+This dataset was exported via roboflow.com on March 3, 2024 at 11:13 AM GMT
 
 Roboflow is an end-to-end computer vision platform that helps you
 * collaborate with your team on computer vision projects
@@ -17,7 +17,7 @@ visit https://github.com/roboflow/notebooks
 
 To find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com
 
-The dataset includes 693 images.
+The dataset includes 1557 images.
 Pieces are annotated in YOLOv8 format.
 
 The following pre-processing was applied to each image:
@@ -26,9 +26,6 @@ The following pre-processing was applied to each image:
 
 The following augmentation was applied to create 3 versions of each source image:
 * 50% probability of horizontal flip
-* Randomly crop between 0 and 15 percent of the image
-* Random shear of between -6° to +6° horizontally and -6° to +6° vertically
-* Random brigthness adjustment of between -10 and +10 percent
-* Random exposure adjustment of between -10 and +10 percent
+* Random brigthness adjustment of between -15 and +15 percent
 
 
