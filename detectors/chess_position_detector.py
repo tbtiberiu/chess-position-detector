@@ -19,7 +19,7 @@ class ChessPositionDetector:
         box_width = image_width / 8
         box_height = image_height / 8
 
-        chess_pieces = ['.', 'b', 'k', 'n', 'p', 'q', 'r', 'B', 'K', 'N', 'P', 'Q', 'R']
+        chess_pieces = ['b', 'k', 'n', 'p', 'q', 'r', 'B', 'K', 'N', 'P', 'Q', 'R']
         piece_positions = []
         for box in chess_pieces_result.boxes:
             piece_type = chess_pieces[int(box.cls)]
