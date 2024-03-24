@@ -21,9 +21,27 @@ class ChessPositionDetector:
 
         chess_pieces = ['b', 'k', 'n', 'p', 'q', 'r', 'B', 'K', 'N', 'P', 'Q', 'R']
         piece_positions = []
+        pieces_count = {
+            'b': 0, 'k': 0, 'n': 0, 'p': 0, 'q': 0, 'r': 0,
+            'B': 0, 'K': 0, 'N': 0, 'P': 0, 'Q': 0, 'R': 0
+        }
+
+        pieces_max_count = {
+            'b': 8, 'k': 1, 'n': 2, 'p': 8, 'q': 1, 'r': 2,
+            'B': 8, 'K': 1, 'N': 2, 'P': 8, 'Q': 1, 'R': 2
+        }
+
         for box in chess_pieces_result.boxes:
             piece_type = chess_pieces[int(box.cls)]
             xmin, ymin, xmax, ymax = box.xyxy[0]
+            piece_image = image[int(ymin):int(ymax), int(xmin):int(xmax)]
+
+            if pieces_count[piece_type] >= pieces_max_count[piece_type]:
+                new_piece_cls = self.chess_pieces_detector.detect_piece_class(piece_image)
+                if new_piece_cls is not None:
+                    piece_type = chess_pieces[int(new_piece_cls)]
+            pieces_count[piece_type] += 1
+
             x_middle = (xmin + xmax) / 2
             y_middle = ymax - (box_height / 2)
 
