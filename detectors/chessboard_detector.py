@@ -51,18 +51,20 @@ class ChessboardDetector:
     def detect_components(self):
         self.detect_lines()
         self.detect_intersections()
-        if len(self.intersections) < 4:
-            return self.lines, self.intersections, self.corners
-        self.detect_corners()
+        try:
+            self.detect_corners()
+        except:
+            print('Something went wrong when detecting the corners!')
         return self.lines, self.intersections, self.corners
 
     def layer(self):
         self.detect_lines()
         self.detect_intersections()
-        if len(self.intersections) < 4:
-            return
-        self.detect_corners()
-        self.transform()
+        try:
+            self.detect_corners()
+            self.transform()
+        except:
+            print('Something went wrong when detecting the corners!')
 
     def detect(self, image, layer_count=LAYER_COUNT):
         self.set_image(image)
